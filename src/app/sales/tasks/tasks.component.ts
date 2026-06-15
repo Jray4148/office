@@ -1,33 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '@/services/tasks.service';
 import { firstValueFrom } from 'rxjs';
-import {TasksResponse} from "@/types/tasks-reponse";
+import {TasksTableData} from "@/types/tasks-reponse";
 import {FilterActionToolbarComponent} from "@/custom/filter-action-toolbar/filter-action-toolbar.component";
-import {CurrencyPipe, DatePipe} from "@angular/common";
 import {PrimeTemplate} from "primeng/api";
 import {TableModule} from "primeng/table";
+import {DialogService} from "primeng/dynamicdialog";
+import {SelectedTasksDialogComponent} from "@/sales/tasks/selected-tasks-dialog/selected-tasks-dialog.component";
 
 @Component({
   selector: 'app-tasks',
   imports: [
     FilterActionToolbarComponent,
-    CurrencyPipe,
-    DatePipe,
     PrimeTemplate,
     TableModule
+  ],
+  providers: [
+    DialogService
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
 export class TasksComponent implements OnInit {
-  tableData: TasksResponse | null = null;
+  tableData: TasksTableData | null = null;
 
   constructor(
-    private tasksService: TasksService
+    private tasksService: TasksService,
+  private dialogService: DialogService,
   ) { }
 
   async ngOnInit() {
     this.tableData = await firstValueFrom(this.tasksService.getTasks());
     console.log(this.tableData);
+  }
+
+  onRowClick(tableData: TasksTableData) {
+    this.taskSelectedDialog(tableData);
+  }
+
+  taskSelectedDialog(tableData: TasksTableData) {
+    const ref = this.dialogService.open(SelectedTasksDialogComponent, {
+      data: tableData,
+      modal: true,
+      maximizable: true,
+      closable: true,
+      width: "85%",
+      height: "90%",
+    });
   }
 }

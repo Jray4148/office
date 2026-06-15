@@ -1,4 +1,4 @@
-export interface TasksResponse {
+export interface TasksTableData {
   hasMoreResults: boolean;
   results: Task[];
 }

@@ -3,6 +3,7 @@
   <p-table
     [value]="tableData?.results ?? []"
     dataKey="taskId"
+    selectionMode="single"
     [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -13,7 +14,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-x>
-      <tr>
+      <tr (click)="onRowClick(x)">
         <td>{{ x.assignedToMetaData.firstName }}</td>
         <td>{{ x.contactMetaData.name }}</td>
         <td>{{ x.name }}</td>
