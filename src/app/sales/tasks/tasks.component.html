@@ -1,1 +1,24 @@
-<p>tasks works!</p>
+<div class="card">
+<app-filter-action-toolbar [title]="'Tasks'" />
+  <p-table
+    [value]="tableData?.results ?? []"
+    dataKey="taskId"
+    [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Assigned To</th>
+        <th>Contact</th>
+        <th>Task Name</th>
+        <th>Description</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-x>
+      <tr>
+        <td>{{ x.assignedToMetaData.firstName }}</td>
+        <td>{{ x.contactMetaData.name }}</td>
+        <td>{{ x.name }}</td>
+        <td>{{ x.description }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
