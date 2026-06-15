@@ -1,0 +1,71 @@
+<div class="card">
+  <p-toast key="message-service" />
+  <div *ngIf="isAuthenticated(); else noAuth">
+    <app-filter-action-toolbar
+      [title]="title"
+      previewTitle="Preview"
+      (preview)="onPreview()"
+      [disable]="disabled"
+      (search)="onSearch($event)"
+      [loading]="loading"/>
+    <p-table
+      [paginator]="true"
+      [rows]="rows"
+      [rowsPerPageOptions]="[25, 50, 100]"
+      [value]="filteredDetails"
+      [totalRecords]="totalRecords"
+      selectionMode="multiple"
+      [(selection)]="selectedTickets"
+      dataKey="id"
+      [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 4rem">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th pSortableColumn="id" style="width: 8%">
+            Id
+          </th>
+          <th pSortableColumn="company" style="width: 20%">
+            Company
+          </th>
+          <th pSortableColumn="email" style="width: 20%">
+            Email
+          </th>
+          <th pSortableColumn="batchId" style="width: 10%">
+            Batch Id
+          </th>
+          <th pSortableColumn="summary" style="width: 20%">
+            Summary
+          </th>
+          <th pSortableColumn="date" style="width: 10%">
+            Date
+          </th>
+          <th pSortableColumn="cost" style="width: 10%">
+            Cost
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-detail let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="detail" [pSelectableRowIndex]="rowIndex"
+          [style.background-color]="detail.hasConfirmation ? 'inherit' : '#fee2e2'"
+            [style.color]="detail.hasConfirmation ? 'inherit' : '#991b1b'">
+          <td><p-tableCheckbox [value]="detail" /> </td>
+          <td>{{ detail.id }}</td>
+          <td>{{ detail.company }}</td>
+          <td>{{ detail.email }}</td>
+          <td>{{ detail.batchId }}</td>
+          <td>{{ detail.summary }}</td>
+          <td>{{ detail.date | date:'MM/dd/yyyy, hh:mm a' }}</td>
+          <td>{{ detail.cost | currency }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<ng-template #noAuth>
+  <div class="card">
+    <p-button (onClick)="login()" label="Login" rounded="true" outlined="true"></p-button>
+  </div>
+</ng-template>

@@ -1,0 +1,12 @@
+<div class="flex justify-end gap-3">
+  <p-button
+    [style]="{ width: '7rem' }"
+    tabindex="-1"
+    [label]="cancelButtonLabel"
+    [outlined]="true"
+    [rounded]="true"
+    severity="secondary"
+    (click)="cancelClick()"
+  />
+  <p-button [disabled]="disable"  [style]="{ width: '7rem' }" [label]="okButtonLabel" [rounded]="true" (click)="okClick()" />
+</div>

@@ -1,0 +1,56 @@
+<div class="flex justify-end gap-3 pt-4 pb-4">
+  <p-button label="Create" [raised]="true" [rounded]="true" icon="pi pi-plus" (onClick)="createInvoices()"/>
+</div>
+<p-dataview [value]="preview.invoices">
+  <ng-template #list let-invoices>
+    <div class="flex flex-col w-full">
+      <div *ngFor="let invoice of invoices"
+           class="w-full border-b border-gray-300 py-4 px-2">
+        <div class="flex justify-between font-semibold text-lg text-gray-700">
+          <span>{{ invoice.company }}</span>
+          <span>Total ${{ invoice.cost }}</span>
+        </div>
+        <div class="text-sm mt-1 text-gray-600">
+          <div><strong>RSI Serial Number:</strong> {{ invoice.rsiSerialNumber }}</div>
+          <div><strong>Zoho ID</strong> {{ invoice.customerId }}</div>
+        </div>
+        <div class="mt-3">
+          <strong class="text-gray-700">Items:</strong>
+          <div *ngFor="let li of invoice.lineItems" class="text-sm text-gray-600 pl-2 mt-1">
+            <strong>Form: </strong>{{ li.formType }} <strong>Batch Id: </strong>{{ li.name }}
+            <strong>Cost: </strong>{{ li.rate }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataview>
+
+<ng-container *ngIf="preview.skippedInvoices?.length">
+  <div class="flex justify-center pt-4 pb-4"> Skipped Invoices </div>
+  <p-dataview [value]="preview.skippedInvoices">
+    <ng-template #list let-invoices>
+      <div class="flex flex-col w-full">
+        <div *ngFor="let invoice of invoices"
+             class="w-full border-b border-gray-300 py-4 px-2 bg-red-50">
+          <div class="flex justify-between font-semibold text-lg text-gray-700">
+            <span>{{ invoice.company }}</span>
+            <span>Error: {{ invoice.errorMessage }}</span>
+            <span>Total ${{ invoice.cost }}</span>
+          </div>
+          <div class="text-sm mt-1 text-gray-600">
+            <div><strong>RSI Serial Number:</strong> {{ invoice.rsiSerialNumber }}</div>
+            <div><strong>Zoho ID</strong> {{ invoice.customerId }}</div>
+          </div>
+          <div class="mt-3">
+            <strong class="text-gray-700">Items:</strong>
+            <div *ngFor="let li of invoice.lineItems" class="text-sm text-gray-600 pl-2 mt-1">
+              <strong>Form: </strong>{{ li.formType }} <strong>Batch Id: </strong>{{ li.name }}
+              <strong>Cost: </strong>{{ li.rate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataview>
+</ng-container>
