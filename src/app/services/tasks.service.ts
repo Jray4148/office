@@ -12,6 +12,11 @@ export class TasksService {
   ) { }
 
   getTasks() {
-    return this.http.get(`${environment.apiBaseUrl}/tasks`)
+    const params: Record<string, string> = {
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
+    };
+
+    return this.http.get(`${environment.apiBaseUrl}/tasks`, { params });
   }
 }
