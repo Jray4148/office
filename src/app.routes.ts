@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {AppLayout} from '@/layout/components/app.layout';
 import {ListComponent} from '@/list/list.component';
-import {FollowUpsComponent} from "@/follow-ups/follow-ups.component";
+import {TasksComponent} from "@/sales/tasks/tasks.component";
 
 export const appRoutes: Routes = [
 
@@ -14,8 +14,8 @@ export const appRoutes: Routes = [
         component: ListComponent
       },
       {
-        path: 'followups',
-        component: FollowUpsComponent
+        path: 'tasks',
+        component: TasksComponent
       }
     ]
   }

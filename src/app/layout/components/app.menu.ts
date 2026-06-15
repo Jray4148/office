@@ -24,8 +24,8 @@ export class AppMenu implements OnInit{
           {
             label: "Sales",
             items: [{
-                 label: "Follow ups",
-                routerLink: ['/followups']
+                 label: "Tasks",
+                routerLink: ['/tasks']
             }]
           }]
     }
