@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {TasksService} from "@/services/tasks.service";
-import {firstValueFrom} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { TasksService } from '@/services/tasks.service';
+import { firstValueFrom } from 'rxjs';
+import {TasksResponse} from "@/types/tasks-reponse";
 
 @Component({
   selector: 'app-tasks',
@@ -9,12 +10,13 @@ import {firstValueFrom} from "rxjs";
   styleUrl: './tasks.component.scss'
 })
 export class TasksComponent implements OnInit {
+  tableData: TasksResponse | null = null;
 
   constructor(
     private tasksService: TasksService
   ) { }
 
   async ngOnInit() {
-    await firstValueFrom(this.tasksService.getTasks());
+    this.tableData = await firstValueFrom(this.tasksService.getTasks());
   }
 }
