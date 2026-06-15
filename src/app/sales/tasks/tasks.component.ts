@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TasksService} from "@/services/tasks.service";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-tasks',
@@ -6,6 +8,13 @@ import { Component } from '@angular/core';
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
-export class TasksComponent {
+export class TasksComponent implements OnInit {
 
+  constructor(
+    private tasksService: TasksService
+  ) { }
+
+  async ngOnInit() {
+    await firstValueFrom(this.tasksService.getTasks());
+  }
 }
