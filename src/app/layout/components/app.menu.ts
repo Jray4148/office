@@ -20,6 +20,13 @@ export class AppMenu implements OnInit{
                  label: "List",
                 routerLink: ['/list']
             }]
-        }]
+        },
+          {
+            label: "Sales",
+            items: [{
+                 label: "Follow ups",
+                routerLink: ['/followups']
+            }]
+          }]
     }
 }
