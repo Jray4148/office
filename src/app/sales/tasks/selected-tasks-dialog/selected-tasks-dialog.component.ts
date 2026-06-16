@@ -14,7 +14,9 @@ import {Divider} from "primeng/divider";
 import {InputText} from "primeng/inputtext";
 import {Textarea} from "primeng/textarea";
 import {Button} from "primeng/button";
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Toast} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 interface EmailForm {
   subject: FormControl<string | null>;
@@ -29,7 +31,8 @@ interface EmailForm {
     InputText,
     Textarea,
     Button,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Toast
   ],
   templateUrl: './selected-tasks-dialog.component.html',
   styleUrl: './selected-tasks-dialog.component.scss'
@@ -42,14 +45,15 @@ export class SelectedTasksDialogComponent implements OnInit {
 
   // Form Controls
   emailForm = new FormGroup<EmailForm>({
-    subject: new FormControl<string>(""),
-    body: new FormControl<string>("")
+    subject: new FormControl<string>("", [Validators.required]),
+    body: new FormControl<string>("", [Validators.required])
   });
 
   constructor(
     private dialogConfig: DynamicDialogConfig<Task>,
     private dialogRef: DynamicDialogRef,
-    private taskService: TasksService
+    private taskService: TasksService,
+    private messageService: MessageService
   ) {
     this.contactId = this.dialogConfig.data?.contactId
     this.contactName = this.dialogConfig.data?.contactMetaData.name
@@ -66,6 +70,7 @@ export class SelectedTasksDialogComponent implements OnInit {
   }
 
   async onSendEmail() {
+    if (!this.validateForm()) return;
     await firstValueFrom(this.taskService.sendEmail(this.createSesEmailRequest()));
     this.dialogRef.close();
   }
@@ -106,5 +111,18 @@ export class SelectedTasksDialogComponent implements OnInit {
         dateCreated: result.dateCreated
       }))
       .filter(result => !!result.note);
+  }
+
+  validateForm(): boolean {
+    if (this.emailForm.invalid) {
+      this.emailForm.markAllAsTouched();
+      this.messageService.add({
+        key: 'invalidForm',
+        severity: 'error',
+        summary: 'Subject and body are required'
+      });
+      return false;
+    }
+    return true;
   }
 }

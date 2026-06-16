@@ -1,3 +1,4 @@
+<p-toast key="invalidForm" position="top-right" />
 <div class="flex justify-between">
   <h5 class="text-2xl font-bold">{{contactName}}</h5>
   <div class="flex gap-3">
@@ -7,11 +8,10 @@
 </div>
 <p-divider />
 <div class="grid grid-cols-1 gap-4" [formGroup]="emailForm">
-  <input class="mt-4" formControlName="subject" type="text" pInputText placeholder="Email Subject" />
-  <textarea rows="10" formControlName="body" pInputTextarea placeholder="Email Body"></textarea>
+  <input class="mt-4" formControlName="subject" type="text" pInputText placeholder="Email Subject" required />
+  <textarea rows="10" formControlName="body" pInputTextarea placeholder="Email Body" required></textarea>
 </div>
 <div class="flex justify-end gap-3 pt-4">
   <p-button label="Cancel" rounded="true" severity="secondary" (click)="onCancel()" />
   <p-button label="Send" rounded="true" (click)="onSendEmail()" />
 </div>
-

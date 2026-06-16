@@ -7,13 +7,15 @@ import {PrimeTemplate} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {DialogService} from "primeng/dynamicdialog";
 import {SelectedTasksDialogComponent} from "@/sales/tasks/selected-tasks-dialog/selected-tasks-dialog.component";
+import {Divider} from "primeng/divider";
 
 @Component({
   selector: 'app-tasks',
   imports: [
     FilterActionToolbarComponent,
     PrimeTemplate,
-    TableModule
+    TableModule,
+    Divider
   ],
   providers: [
     DialogService
@@ -26,7 +28,7 @@ export class TasksComponent implements OnInit {
 
   constructor(
     private tasksService: TasksService,
-  private dialogService: DialogService,
+    private dialogService: DialogService,
   ) { }
 
   async ngOnInit() {
@@ -38,7 +40,7 @@ export class TasksComponent implements OnInit {
   }
 
   taskSelectedDialog(tableData: TasksTableData) {
-    const ref = this.dialogService.open(SelectedTasksDialogComponent, {
+    this.dialogService.open(SelectedTasksDialogComponent, {
       data: tableData,
       modal: true,
       maximizable: true,
