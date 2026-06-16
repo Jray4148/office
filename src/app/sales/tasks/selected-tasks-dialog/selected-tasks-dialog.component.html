@@ -11,7 +11,7 @@
   <textarea rows="10" formControlName="body" pInputTextarea placeholder="Email Body"></textarea>
 </div>
 <div class="flex justify-end gap-3 pt-4">
-  <p-button label="Cancel" rounded="true" severity="secondary" />
+  <p-button label="Cancel" rounded="true" severity="secondary" (click)="onCancel()" />
   <p-button label="Send" rounded="true" (click)="onSendEmail()" />
 </div>
 

@@ -6,7 +6,7 @@ import {
   SesEmailRequest,
   Task
 } from "@/types/tasks-reponse";
-import {DynamicDialogConfig} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {TasksService} from '@/services/tasks.service';
 import {firstValueFrom} from "rxjs";
 import {DropdownModule} from "primeng/dropdown";
@@ -14,7 +14,7 @@ import {Divider} from "primeng/divider";
 import {InputText} from "primeng/inputtext";
 import {Textarea} from "primeng/textarea";
 import {Button} from "primeng/button";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 interface EmailForm {
   subject: FormControl<string | null>;
@@ -48,6 +48,7 @@ export class SelectedTasksDialogComponent implements OnInit {
 
   constructor(
     private dialogConfig: DynamicDialogConfig<Task>,
+    private dialogRef: DynamicDialogRef,
     private taskService: TasksService
   ) {
     this.contactId = this.dialogConfig.data?.contactId
@@ -66,6 +67,11 @@ export class SelectedTasksDialogComponent implements OnInit {
 
   async onSendEmail() {
     await firstValueFrom(this.taskService.sendEmail(this.createSesEmailRequest()));
+    this.dialogRef.close();
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 
   createSesEmailRequest(): SesEmailRequest {
