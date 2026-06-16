@@ -6,9 +6,9 @@
   </div>
 </div>
 <p-divider />
-<div class="grid grid-cols-1 gap-4">
-  <input class="mt-4" type="text" pInputText placeholder="Email Subject" />
-  <textarea rows="10" pInputTextarea placeholder="Email Body"></textarea>
+<div class="grid grid-cols-1 gap-4" [formGroup]="emailForm">
+  <input class="mt-4" formControlName="subject" type="text" pInputText placeholder="Email Subject" />
+  <textarea rows="10" formControlName="body" pInputTextarea placeholder="Email Body"></textarea>
 </div>
 <div class="flex justify-end gap-3 pt-4">
   <p-button label="Cancel" rounded="true" severity="secondary" />

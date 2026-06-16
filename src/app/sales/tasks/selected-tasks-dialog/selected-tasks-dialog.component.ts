@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Task} from "@/types/tasks-reponse";
+import {EmailResponse, Task} from "@/types/tasks-reponse";
 import {DynamicDialogConfig} from "primeng/dynamicdialog";
 import {GenerateFollowUpDetails, GenerateFollowUpRequest, TasksService} from '@/services/tasks.service';
 import {firstValueFrom} from "rxjs";
@@ -8,6 +8,12 @@ import {Divider} from "primeng/divider";
 import {InputText} from "primeng/inputtext";
 import {Textarea} from "primeng/textarea";
 import {Button} from "primeng/button";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+
+interface EmailForm {
+  subject: FormControl<string | null>;
+  body: FormControl<string | null>;
+}
 
 @Component({
   selector: 'app-selected-tasks-dialog',
@@ -16,7 +22,8 @@ import {Button} from "primeng/button";
     Divider,
     InputText,
     Textarea,
-    Button
+    Button,
+    ReactiveFormsModule
   ],
   templateUrl: './selected-tasks-dialog.component.html',
   styleUrl: './selected-tasks-dialog.component.scss'
@@ -26,7 +33,12 @@ export class SelectedTasksDialogComponent implements OnInit {
   contactNotesForTask: any;
   contactName: string | undefined;
   task: string | undefined;
-  notes: Array<any> = [];
+
+  // Form Controls
+  emailForm = new FormGroup<EmailForm>({
+    subject: new FormControl<string>(""),
+    body: new FormControl<string>("")
+  });
 
   constructor(
     private dialogConfig: DynamicDialogConfig<Task>,
@@ -42,7 +54,13 @@ export class SelectedTasksDialogComponent implements OnInit {
   }
 
   async onGenerateFollowUp() {
-    await firstValueFrom(this.taskService.generateFollowUp(this.createFollowUpRequest()));
+    const response = await firstValueFrom(this.taskService.generateFollowUp(this.createFollowUpRequest()));
+    this.appendFormData(response);
+  }
+
+  appendFormData(response: EmailResponse) {
+    this.emailForm.get('subject')?.setValue(response.subject);
+    this.emailForm.get('body')?.setValue(response.body);
   }
 
   createFollowUpRequest(): GenerateFollowUpRequest {

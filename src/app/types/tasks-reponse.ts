@@ -27,3 +27,8 @@ export interface ContactMetaData {
   assignedTo: string;
   name: string;
 }
+
+export interface EmailResponse {
+  subject: string;
+  body: string;
+}

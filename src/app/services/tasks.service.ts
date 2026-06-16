@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {TasksTableData} from "@/types/tasks-reponse";
+import {EmailResponse, TasksTableData} from "@/types/tasks-reponse";
 
 export interface GenerateFollowUpRequest {
   Context: GenerateFollowUpDetails;
@@ -36,6 +36,6 @@ export class TasksService {
   }
 
   generateFollowUp(request: GenerateFollowUpRequest) {
-    return this.http.post(`${environment.apiBaseUrl}/generate-follow-up`, request);
+    return this.http.post<EmailResponse>(`${environment.apiBaseUrl}/generate-follow-up`, request);
   }
 }
