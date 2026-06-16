@@ -1,17 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {EmailResponse, TasksTableData} from "@/types/tasks-reponse";
-
-export interface GenerateFollowUpRequest {
-  Context: GenerateFollowUpDetails;
-}
-
-export interface GenerateFollowUpDetails {
-  task: string;
-  notes: Array<string>;
-  contactName: string;
-}
+import {EmailResponse, GenerateFollowUpRequest, SesEmailRequest, TasksTableData} from "@/types/tasks-reponse";
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +27,9 @@ export class TasksService {
 
   generateFollowUp(request: GenerateFollowUpRequest) {
     return this.http.post<EmailResponse>(`${environment.apiBaseUrl}/generate-follow-up`, request);
+  }
+
+  sendEmail(email: SesEmailRequest) {
+    return this.http.post(`${environment.apiBaseUrl}/generate-follow-up/send-email`, email);
   }
 }

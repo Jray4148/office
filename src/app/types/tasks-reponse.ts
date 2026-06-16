@@ -32,3 +32,19 @@ export interface EmailResponse {
   subject: string;
   body: string;
 }
+
+export interface GenerateFollowUpRequest {
+  Context: GenerateFollowUpDetails;
+}
+
+export interface GenerateFollowUpDetails {
+  task: string;
+  notes: Array<string>;
+  contactName: string;
+}
+
+export interface SesEmailRequest {
+  subject: string;
+  body: string;
+  contactId: string;
+}

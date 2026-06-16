@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {EmailResponse, Task} from "@/types/tasks-reponse";
+import {
+  EmailResponse,
+  GenerateFollowUpDetails,
+  GenerateFollowUpRequest,
+  SesEmailRequest,
+  Task
+} from "@/types/tasks-reponse";
 import {DynamicDialogConfig} from "primeng/dynamicdialog";
-import {GenerateFollowUpDetails, GenerateFollowUpRequest, TasksService} from '@/services/tasks.service';
+import {TasksService} from '@/services/tasks.service';
 import {firstValueFrom} from "rxjs";
 import {DropdownModule} from "primeng/dropdown";
 import {Divider} from "primeng/divider";
@@ -56,6 +62,18 @@ export class SelectedTasksDialogComponent implements OnInit {
   async onGenerateFollowUp() {
     const response = await firstValueFrom(this.taskService.generateFollowUp(this.createFollowUpRequest()));
     this.appendFormData(response);
+  }
+
+  async onSendEmail() {
+    await firstValueFrom(this.taskService.sendEmail(this.createSesEmailRequest()));
+  }
+
+  createSesEmailRequest(): SesEmailRequest {
+    return {
+      subject: this.emailForm.value.subject!,
+      body: this.emailForm.value.body!,
+      contactId: this.contactId!,
+    }
   }
 
   appendFormData(response: EmailResponse) {
