@@ -44,8 +44,7 @@ export class TasksComponent implements OnInit {
       modal: true,
       maximizable: true,
       closable: true,
-      width: "85%",
-      height: "90%",
+      width: "60%",
     });
   }
 }
