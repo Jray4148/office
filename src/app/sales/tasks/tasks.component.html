@@ -8,6 +8,7 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Assigned To</th>
+        <th>Status</th>
         <th>Contact</th>
         <th>Task Name</th>
         <th>Description</th>
@@ -16,6 +17,7 @@
     <ng-template pTemplate="body" let-x>
       <tr (click)="onRowClick(x)">
         <td>{{ x.assignedToMetaData.firstName }}</td>
+        <td>{{ x.isCompleted ? 'Completed' : 'Pending' }}</td>
         <td>{{ x.contactMetaData.name }}</td>
         <td>{{ x.name }}</td>
         <td>{{ x.description }}</td>
