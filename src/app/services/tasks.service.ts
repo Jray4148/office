@@ -3,6 +3,16 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {TasksTableData} from "@/types/tasks-reponse";
 
+export interface GenerateFollowUpRequest {
+  Context: GenerateFollowUpDetails;
+}
+
+export interface GenerateFollowUpDetails {
+  task: string;
+  notes: Array<string>;
+  contactName: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +33,9 @@ export class TasksService {
 
   getTaskDetails(taskId: string) {
     return this.http.get(`${environment.apiBaseUrl}/tasks/${taskId}`);
+  }
+
+  generateFollowUp(request: GenerateFollowUpRequest) {
+    return this.http.post(`${environment.apiBaseUrl}/generate-follow-up`, request);
   }
 }

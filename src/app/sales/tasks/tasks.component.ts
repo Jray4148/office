@@ -31,7 +31,6 @@ export class TasksComponent implements OnInit {
 
   async ngOnInit() {
     this.tableData = await firstValueFrom(this.tasksService.getTasks());
-    console.log(this.tableData);
   }
 
   onRowClick(tableData: TasksTableData) {
