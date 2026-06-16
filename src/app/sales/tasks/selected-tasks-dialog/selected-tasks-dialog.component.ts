@@ -73,6 +73,7 @@ export class SelectedTasksDialogComponent implements OnInit {
     if (!this.validateForm()) return;
     await firstValueFrom(this.taskService.sendEmail(this.createSesEmailRequest()));
     this.dialogRef.close();
+    location.reload();
   }
 
   onCancel() {
