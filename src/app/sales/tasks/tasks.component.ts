@@ -12,7 +12,6 @@ import {Divider} from "primeng/divider";
 @Component({
   selector: 'app-tasks',
   imports: [
-    FilterActionToolbarComponent,
     PrimeTemplate,
     TableModule,
     Divider
